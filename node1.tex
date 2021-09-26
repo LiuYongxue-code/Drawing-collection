@@ -1,0 +1,123 @@
+\documentclass[
+  tikz,
+  border=15pt,
+%  convert={outext=.png,density=300,size=600},
+  convert=false,
+  ]{standalone}
+  \usepackage{ctex}
+\makeatletter
+\newif\ifpgf@nodescope@grid
+\tikzset{
+  nodescope grid/.is if=pgf@nodescope@grid,
+  every nodescope grid node/.style={
+    shape=rectangle,
+    font=\small\ttfamily,
+    inner sep=+0pt,
+    outer sep=+1pt,
+    fill=white,
+    overlay},
+  every nodescope node/.style={
+    shape=rectangle,
+    inner sep=+0pt,
+    outer sep=+0pt,
+    draw=none,
+    fill=none}}
+\def\tikz@nodescope@env{%
+  \pgfutil@ifnextchar[\tikz@@nodescope@env{\tikz@@@nodescope@env{}[]}}
+\def\tikz@@nodescope@env[#1]{%
+  \pgfutil@ifnextchar[{\tikz@@@nodescope@env{#1}}{\tikz@@@nodescope@env{#1}[]}}
+\def\tikz@@@nodescope@env#1[#2]#3{%
+  \pgfutil@ifnextchar[{\tikz@@@@nodescope@env{#1}{#2}{#3}}{\tikz@@@@nodescope@env{#1}{#2}{#3}[]}}
+\def\tikz@@@@nodescope@env#1#2#3[#4]{%
+  \tikz@scope@env[#4]
+    \node[every nodescope node/.try, #1, alias=tikz@last@nodescope]{\includegraphics[#2]{#3}};%
+    \pgftransformresetnontranslations
+    \pgftransformshift{\pgfpointanchor{tikz@last@nodescope}{south west}}%
+    \pgfsetxvec{\pgfpointdiff{\pgfpointanchor{tikz@last@nodescope}{south west}}{\pgfpointanchor{tikz@last@nodescope}{south east}}}%
+    \pgfsetyvec{\pgfpointdiff{\pgfpointanchor{tikz@last@nodescope}{south west}}{\pgfpointanchor{tikz@last@nodescope}{north west}}}%
+    \ifpgf@nodescope@grid
+      \draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
+      \foreach \x in {0,1,...,10}{
+        \node[every nodescope grid node/.try, left, rotate=90] at (\x/10,0) {\ifnum\x=10\relax1.0\else0.\x\fi};
+        \node[every nodescope grid node/.try, left] at (0,\x/10) {\ifnum\x=10\relax1.0\else0.\x\fi};
+      }
+    \fi
+}
+\tikzaddtikzonlycommandshortcutlet\tikz@orignodescope\nodescope
+\tikzaddtikzonlycommandshortcutlet\tikz@origendnodescope\endnodescope
+\tikzaddtikzonlycommandshortcutlet\tikz@origstartnodescope\startnodescope
+\tikzaddtikzonlycommandshortcutlet\tikz@origstopnodescope\stopnodescope
+\tikzaddtikzonlycommandshortcutlet\nodescope\tikz@nodescope@env
+\tikzaddtikzonlycommandshortcutlet\endnodescope\endscope
+\tikzaddtikzonlycommandshortcutlet\startnodescope\nodescope
+\tikzaddtikzonlycommandshortcutlet\stopnodescope\endnodescope
+\pgfutil@g@addto@macro\tikz@uninstallcommands{%
+  \let\nodescope\tikz@orignodescope
+  \let\endnodescope\tikz@origendnodescope
+  \let\startnodescope\tikz@origstartnodescope
+  \let\stopnodescope\tikz@origstopnodescope
+}
+\tikzdeclarecoordinatesystem{nodescope}{%
+  \edef\pgf@temp{#1}%
+  \expandafter\pgfutil@ifnextchar\expandafter x\expandafter\tikz@nodescope@split\expandafter\tikz@nodescope@split\pgf@temp\pgf@stop
+}
+\def\tikz@nodescope@split#1:#2\pgf@stop{%
+  \begingroup
+    \edef\pgf@temp{#1}%
+    \pgftransformresetnontranslations
+    \pgfsetxvec{\pgfpointdiff{\pgfpointanchor{#1}{south west}}{\pgfpointanchor{#1}{south east}}}%
+    \pgfsetyvec{\pgfpointdiff{\pgfpointanchor{#1}{south west}}{\pgfpointanchor{#1}{north west}}}%
+    \tikz@scan@one@point\tikz@nodescope@shift(#2)\relax
+  \endgroup
+}
+\def\tikz@nodescope@shift#1{%
+  \pgf@process{\pgfpointadd{#1}{\pgfpointanchor{\pgf@temp}{south west}}}%
+}
+\makeatother
+\begin{document}
+
+\begin{tikzpicture}
+\node[scale=2] at (0,6){TikZ 标注图片信息};
+
+  \node at (-6.5,0)
+  {
+  \begin{tikzpicture}\sffamily
+  \begin{nodescope}[draw, line width=2mm, rounded corners, inner sep=+.5\pgflinewidth, outer sep=+.5\pgflinewidth, name=alterPC]
+                   [width=.9\textwidth]{fig1.jpg}
+                   [nodescope grid]
+    \tikzset{
+      nodes={fill=white,rounded corners, fill opacity=.5, text opacity=1},
+      every path/.append style={ultra thick, rounded corners}}
+    \draw[orange, rotate around={-15:(0.265,0.3)}] (0.03, 0.15) rectangle node[rotate=-15] {Tastatur} (0.5,0.45);
+    \node[white] at (nodescope cs: alterPC: 0.7, 0.8) {\color{white}Lampe};
+    \node[white] at (nodescope cs: alterPC: 0.6, 0.5) {\color{white}Carton};
+    \node[white,align=center] at (nodescope cs: alterPC: 0.7, 0.2) {\color{red}Fixed\\\color{red} telephone};
+    \node[white] at (nodescope cs: alterPC: 0.35, 0.8) {\color{red}Computer};
+    \node[white] at (nodescope cs: alterPC: 0.1, 0.7) {\color{cyan}Printer};
+    \node[white] at (nodescope cs: alterPC: 0.9, 0.4) {\color{cyan}Bookshelf};
+  \end{nodescope}
+
+\end{tikzpicture}
+  };
+  
+  \node at (6.5,0)
+  {
+\begin{tikzpicture}\sffamily
+  \begin{nodescope}[draw, line width=2mm, rounded corners, inner sep=+.5\pgflinewidth, outer sep=+.5\pgflinewidth, name=alterPC]
+                   [width=.9\textwidth]{fig2.jpg}
+                   [nodescope grid]
+    \tikzset{
+      nodes={fill=white,rounded corners, fill opacity=.5, text opacity=1},
+      every path/.append style={ultra thick, rounded corners}}
+    \draw[white, align=center,rotate around={-0:(0.265,0.2)}] (0.2, 0.35) rectangle node[rotate=0,below=0.05cm] {Online \LaTeX{} 在线编译} (0.8,0.5);
+    \draw[red, align=center,rotate around={-0:(0.265,0.2)}] (0.25, 0.7) rectangle node[rotate=0,right=1cm] {\tiny 直接点击类别搜索} (0.85,0.75);
+    \node[gray] at (nodescope cs: alterPC: 0.9, 0.85) {\tiny\color{red}个人主页};
+    \node[gray] at (nodescope cs: alterPC: 0.35, 0.8) {\tiny\color{red}首页搜索区域};
+    \node[red] at (nodescope cs: alterPC: 0.15, 0.82) {\tiny\color{white}官网主页};
+  \end{nodescope}
+
+\end{tikzpicture}
+  };
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,43 @@
+\documentclass[margin=5pt]{standalone}
+%\documentclass{article}
+\usepackage[ngerman]{babel}
+\usepackage{selinput}
+\SelectInputMappings{adieresis={ä}, germandbls={ß}}
+
+\usepackage{onimage}
+%\usepackage{tikz}
+
+\begin{document}
+
+\tikzset{every path/.append style={ultra thick, rounded corners}}
+
+\begin{tikzonimage} [width=.75\textwidth]{fig1.jpg}
+[tsx/show help lines]
+\sffamily
+\draw[red, rotate around={-15:(0.265,0.3)}] (0.03, 0.175) rectangle
+node[fill=white,rounded corners, fill opacity=.5, text opacity=1,rotate=-15] {Tastatur} (0.5,0.45);
+
+\node[white] at (0.7, 0.8) {Lampe};
+
+\node[align=left, text=red, fill=white,rounded corners, fill opacity=.5, text opacity=1] at (0.45, 0.0) {Schreibblock \\ mit Klebestreifenblättern};
+
+\node[align=left, text=red, fill=white,rounded corners, fill opacity=.5, text opacity=1, rotate=75] at (0.8, 0.15) {Telefon};
+
+\node[align=left, text=red, fill=white,rounded corners, fill opacity=.8, text opacity=1] at (0.125, 0.8) {Ein oller \\PC};
+
+\node[align=left, text=red, fill=gray!50,rounded corners, fill opacity=.8, text opacity=1] at (0.125, 0.8) {Ein oller \\PC};
+
+\draw[<-, gray!80, opacity=.8] (0.5,0.625) -- (0.6,1.05);
+\draw[<-, gray!80, opacity=.8] (0.475,0.905) -- (0.575,1.05) node[above, align=left, text=red, fill=gray!50,rounded corners, fill opacity=.8, text opacity=1] {Dekorations-Tiere};
+
+\node[align=left, text=red, fill=white,rounded corners, fill opacity=.8, text opacity=1] at (0.5, 0.45) {Kaffeetasse};
+
+\draw[gray!80, opacity=.8] (0.6,0.6) -- (1.0,0.4) node[below, align=left, text=red, fill=gray!50,rounded corners, fill opacity=.8, text opacity=1] {Riesige \\ Speicher- \\ medien};
+
+\node[align=left, text=red, fill=gray!50,rounded corners, fill opacity=.8, text opacity=1] at (1.05, 0.6) {Schnellhefter, \\ Ordner und \\ Blätter};
+
+\node[circle, draw, thin, align=left, text=red!60!black, fill=gray!50,rounded corners, fill opacity=.8, text opacity=1] at (0.95, 1.0) {\texttt{\textbf{onimage.sty}}};
+
+\draw[<-, gray!80, opacity=.8] (0.2,0.1) -- (0.1,-0.05) node[below, align=left, text=red, fill=gray!50,rounded corners, fill opacity=.8, text opacity=1] {Schreibgeräte};
+\end{tikzonimage}
+\end{document}

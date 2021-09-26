@@ -1,0 +1,125 @@
+\documentclass{article}
+\usepackage[landscape,left=2in,right=2in,top=2.2in,bottom=2in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\PassOptionsToPackage{dvipsnames,svgnames}{xcolor}
+\usepackage[object=vectorian]{pgfornament}
+\usetikzlibrary{shapes.geometric,calc}
+\definecolor{fondpaille}{cmyk}{0,0,0.1,0}
+\usepackage{everypage}
+\usepackage{fancyhdr}
+
+\pagestyle{empty}
+
+\newcommand{\eachpageornament}{%
+\begin{tikzpicture}[remember picture, overlay]
+\node[anchor=north west] at (current page.north west){%
+\pgfornament[width=2cm]{63}};
+\node[anchor=north east] at (current page.north east){%
+\pgfornament[width=2cm,symmetry=v]{63}};
+\node[anchor=south west] at (current page.south west){%
+\pgfornament[width=2cm,symmetry=h]{63}};
+\node[anchor=south east] at (current page.south east){%
+\pgfornament[width=2cm,symmetry=c]{63}};
+%
+\node[anchor=west,rotate=90] at ($(current page.west)+(9pt,-75pt)$){%
+\pgfornament[width=6.5cm,symmetry=c]{88}};
+\node[anchor=west,rotate=90] at ($(current page.west)+(9pt,-255pt)$){%
+\pgfornament[width=6.5cm,symmetry=c]{88}};
+\node[anchor=west,rotate=90] at ($(current page.west)+(9pt,60pt)$){%
+\pgfornament[width=6.5cm,symmetry=c]{88}};
+%
+\node[anchor=east,rotate=90] at ($(current page.east)-(8pt,+70pt)$){%
+\pgfornament[width=6.5cm,symmetry=c]{88}};
+\node[anchor=east,rotate=90] at ($(current page.east)-(8pt,-255pt)$){%
+\pgfornament[width=6.5cm,symmetry=c]{88}};
+\node[anchor=east,rotate=90] at ($(current page.east)-(8pt,-70pt)$){%
+\pgfornament[width=6.5cm,symmetry=c]{88}};
+%
+\node[anchor=north,rotate=0] at ($(current page.north)-(0pt,1.5pt)$){%
+\pgfornament[width=9cm,symmetry=c]{88}};
+\node[anchor=north,rotate=0] at ($(current page.north)-(234pt,2pt)$){%
+\pgfornament[width=7.5cm,symmetry=c]{88}};
+\node[anchor=north,rotate=0] at ($(current page.north)-(-234pt,2pt)$){%
+\pgfornament[width=7.5cm,symmetry=c]{88}};
+%
+%
+\node[anchor=south,rotate=180,yscale=0.8,xscale=1.5] at ($(current page.south)+(0pt,100pt)$){%
+\pgfornament[width=4cm,symmetry=c]{8}};
+%
+\node[anchor=north,rotate=180,yscale=0.5] at ($(current page.north)+(0pt,-120pt)$){%
+\pgfornament[width=10cm,symmetry=c]{68}};
+%
+\node[scale=0.8,color=green!20!black,anchor=north] at ($(current page.south)+(-200pt,50pt)$){%
+\pgfornament[symmetry=c]{87}};
+\node[scale=0.8,color=green!20!black,anchor=north] at ($(current page.south)+(200pt,50pt)$){%
+\pgfornament[symmetry=c]{87}};
+%
+\node[scale=0.6,color=green!20!black,anchor=north west,rotate=45] at ($(current page.north west)+(-20pt,-90pt)$){%
+\pgfornament[symmetry=c]{77}};
+\node[scale=0.6,color=green!20!black,anchor=north east,rotate=-15] at ($(current page.north east)+(-40pt,-20pt)$){%
+\pgfornament[symmetry=c]{78}};
+\node[opacity=0.1] at ($(current page.south west)+(250pt,200pt)$){\includegraphics[width=5.2in]{xiaoxun.jpg}};
+\end{tikzpicture}
+}
+\AddEverypageHook{\eachpageornament}
+
+\pagecolor{fondpaille}
+\color{Maroon}
+
+\IfFileExists{csvsimple-doc.cfg}{\input{csvsimple-doc.cfg}}{}
+\providecommand\csvpkgprefix{}
+\usepackage{\csvpkgprefix csvsimple-l3}
+
+\begin{document}
+\thispagestyle{empty}
+
+\begin{center}
+  {\Huge \bfseries Information Table of Awarded Students}
+  \end{center}
+
+\vspace{25pt}
+\smallskip
+{\large
+\csvautotabular{Information.csv}
+}
+
+\vfill
+
+
+{\Huge \bfseries The following contents is the scholarship certification of each student.}
+
+\vspace{30pt}
+\newpage
+
+\csvnames{my names}{Lname=\Lname,Fname=\Fname,
+gender=\Gender,Snumber=\Snumber,
+Overall=\Scholarship,
+year=\Theyear,
+gen=\Gen}
+
+\csvreader[my names, late after line=, late after last line=]%
+  {Information.csv}{}{
+  %\begin{minipage}{0.8\linewidth}
+  \begin{center}
+  {\Huge \bfseries CERTIFICATE OF SCHOLARSHIP}
+  \end{center}
+
+\vspace{45pt}
+  \noindent
+  \LARGE
+  This is to certify that
+  \Gender~\Lname~\Fname~(Student NO: \Snumber) has been awarded the Scholarship for Outstanding \Scholarship~
+  Students in the year of \Theyear. This certificate
+     is hereby the conferred to \Gen~as an encouragement.
+
+     \vfill
+     \hfill Central China Normal University
+
+     \vspace{10pt}
+
+\newpage
+}
+
+\end{document} 

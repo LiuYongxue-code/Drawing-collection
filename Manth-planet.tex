@@ -1,0 +1,114 @@
+\documentclass[margin=10pt]{standalone}
+\PassOptionsToPackage{usenames,svgnames}{xcolor}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{tikz}
+\usetikzlibrary{mindmap}
+\begin{document}
+\pagecolor{black!50!green!50!}
+\begin{tikzpicture}[
+             nodes = { font = \sffamily\bfseries, align = center,
+                       execute at begin node = {\hspace{0pt}}},
+      large/.style = { concept, font = \Large\sffamily\bfseries},
+       huge/.style = { concept, font = \Huge\sffamily\bfseries},
+      black/.style = { color = black},
+      white/.style = { color = white},
+    black45/.style = { color = black, sibling angle = 45},
+    white40/.style = { color = white, sibling angle = 40},
+  ]
+  \path[mindmap, concept color = purple!30!yellow!70!, text = white]
+    node[huge, scale = 0.85, text = purple] {Matheplanet}
+    [clockwise from = -60]
+    child[concept color = blue] {
+      node[large, level distance = 2.4cm] {Fachbereiche}
+      [clockwise from = 25]
+      child[white, level distance = 2.4cm]
+        { node[concept, scale = 0.8] {Informatik} }
+      child[white40, level distance = 2.4cm] {
+        node[concept, scale = 0.7] {\LaTeX} }
+      child[white, sibling angle = 38,
+        level distance = 2.4cm] { node[concept, scale = 0.7] {3M} }
+      child[white, sibling angle = 42] {
+        node[concept, scale = 1.25] {Mathematik}
+      [clockwise from = -15]
+      child[white, level distance = 2.5cm] {
+        node[concept, scale = 0.9] {Olympiadeaufgaben} } }
+      child[white, sibling angle = 43] {
+        node[concept, scale = 0.9] {Physik}
+      [clockwise from = 85]
+      child[white, level distance = 2.1cm]
+        { node[concept] {Ingenieurwesen} } }
+    }
+    child[concept color = brown!80!yellow] {
+      node[large, text = black] {Rubriken}
+      [clockwise from = -75]
+      child[black45, level distance = 2.6cm] {
+        node[concept] {Buchreviews} }
+      child[black45] { node[concept, scale=0.6] {WMM} }
+      child[black45] { node[concept, scale=0.8] {Links} }
+      child[black45] { node[concept] {Artikel}
+        [clockwise from = 25] child[black]
+          { node[concept] {Montagsreport} } }
+    }
+    child[concept color = red!50!white] {
+      node[concept, text = black] {Besucher}
+      [clockwise from=90]
+      child[black45] { node[concept] {Chat} }
+      child[black45, level distance = 2.5cm] {
+        node[concept, scale = 0.8] {Nachtwache} }
+    }
+    child[concept color = teal] {
+      node[large] {Events}
+      [clockwise from = 160]
+      child[white] { node[concept, scale = 0.85] {Schach}
+      [clockwise from = 82] child[white,
+        level distance = 1.7cm] { node[concept] {MPCC} } }
+      child[white] { node[concept] {Treffen}
+          [clockwise from = 25]
+      child[white] { node[concept] {Impulsvortrag} }
+      child[white, sibling angle = 240] { node[concept]
+        {Regional} } }
+      child[white] { node[concept] {Award} }
+      child[white] { node[concept, scale=0.7] {Challenge} }
+    }
+  child[concept color = green!50!LimeGreen] { node[large] {Mitglieder}
+ [clockwise from = 90]
+   child[white] { node[concept] {Senioren}
+     [clockwise from = 30] child[white] {
+       node[concept, scale = 1.4] {Wissen} } }
+  child[white40] { node[concept, scale = 0.8] {Moderatoren}
+    [clockwise from = 20]
+  child[white, level distance = 1.8cm] {
+    node[concept] {Ordnung} } }
+  child[white40] { node[concept, scale = 0.7] {Spender}
+    [clockwise from=33]
+   child[white, level distance = 1.7cm] {
+     node[concept, scale = 0.8] {Geld} }
+  }
+  child[white40] { node[concept, scale=0.8] {Matroid}
+    [clockwise from = -145] child[white] {
+    node[concept] {Technik} }}
+  }
+    child[concept color = red!90!cyan] {
+      node[large, grow = -30] {Forum}
+      [clockwise from = 61]
+      child[white, level distance = 5cm, scale = 0.9] {
+        node[concept] {Aktuelles \& Interessantes} }
+      child[white, sibling angle = 28, level distance = 2.8cm] {
+        node[concept] {Erfahrungsaustausch} }
+      child[white, sibling angle = 36,
+        level distance = 2.5cm] {
+        node[concept, scale = 1.1] {Hilfestellung} }
+      child[white, sibling angle = 39] {
+        node[concept] {Zusammenarbeit}
+  [clockwise from = -63]
+  child[white] { node[concept] {Collatz} }
+  child[white, level distance = 4cm, sibling angle = 17] {
+    node[concept] {Streichholzgraphen} }
+  child[white, sibling angle = 17] { node[concept] {Al Zimm.} } }
+    child[white, sibling angle = 49, level distance = 2.5cm] {
+      node[concept, scale = 0.95] {Knobelecke} }
+  };
+\end{tikzpicture}
+\end{document}

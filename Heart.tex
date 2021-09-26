@@ -1,0 +1,21 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{trig format plots=rad, compat=1.11}
+\usepgfplotslibrary{colormaps}
+\begin{document}
+\begin{tikzpicture}
+\begin{axis}[colormap/violet, hide axis]
+\addplot3[
+surf,
+domain = 0:pi,
+domain y = 0:2*pi,
+samples = 50,
+samples y = 70,
+z buffer = sort
+]
+( {sin(x)*cos(y)*(sqrt(3/(4*pi))*sin(x)*cos(y))^2},
+{sin(x)*sin(y)*(sqrt(3/(4*pi))*sin(x)*cos(y))^2},
+{cos(x)*(sqrt(3/(4*pi))*sin(x)*cos(y))^2} );
+\end{axis}
+\end{tikzpicture}
+\end{document}

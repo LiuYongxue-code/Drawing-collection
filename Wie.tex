@@ -1,0 +1,62 @@
+\documentclass[tikz]{standalone}
+\usepackage{luacode,pgfplots}
+\begin{luacode*}
+-- Differential equation of Lorenz attractor
+function f(x,y,z)
+    local sigma = 3
+    local rho = 26.5
+    local beta = 1
+    return {sigma*(y-x),-x*z + rho*x - y,x*y - beta*z}
+end
+
+-- Code to write PGFplots data as coordinates
+function print_LorAttrWithEulerMethod(h,npoints,option)
+    -- The initial point (x0,y0,z0)
+    local x0 = 0.0
+    local y0 = 1.0
+    local z0 = 0.0
+    -- add random number between -0.25 and 0.25
+    local x = x0 + (math.random()-0.5)/2
+    local y = y0 + (math.random()-0.5)/2
+    local z = z0 + (math.random()-0.5)/2
+    if option ~= [[]] then
+        tex.sprint("\\addplot3[" .. option .. "] coordinates{")
+    else
+        tex.sprint("\\addplot3 coordinates{")
+    end
+    -- dismiss the first 100 points
+    -- to go into the attractor
+    for i=1, 100 do
+        m = f(x,y,z)
+        x = x + h * m[1]
+        y = y + h * m[2]
+        z = z + h * m[3]
+    end
+    for i=1, npoints do
+        m = f(x,y,z)
+        x = x + h * m[1]
+        y = y + h * m[2]
+        z = z + h * m[3]
+        tex.sprint("("..x..","..y..","..z..")")
+    end
+    tex.sprint("}")
+end
+\end{luacode*}
+\newcommand\addLUADEDplot[3][]{%
+  \directlua{print_LorAttrWithEulerMethod(#2,#3,[[#1]])}%
+}
+\pgfplotsset{width=.9\hsize}
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}
+    % SYNTAX: Solution of the Lorenz system
+    % with step h=0.02 sampled at 1000 points.
+    \addLUADEDplot[color=red,smooth]{0.02}{1000};
+    \addLUADEDplot[color=green,smooth]{0.02}{1000};
+    \addLUADEDplot[color=blue,smooth]{0.02}{1000};
+    \addLUADEDplot[color=cyan,smooth]{0.02}{1000};
+    \addLUADEDplot[color=magenta,smooth]{0.02}{1000};
+    \addLUADEDplot[color=yellow,smooth]{0.02}{1000};
+  \end{axis}
+\end{tikzpicture}
+\end{document}

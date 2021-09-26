@@ -1,0 +1,18 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepgfplotslibrary{colormaps}
+\begin{document}
+\begin{tikzpicture}
+  \begin{axis}[
+      data cs = polar,
+      hide axis,
+      colormap/cool,
+      point meta = -z,
+      view = {0}{90}
+    ]
+    \addplot3[surf, shader=faceted interp, domain=0:360, samples=100,
+      y domain = 0:20, samples y = 20, z buffer = sort]
+      ( {x}, { y*2 + cos(y*2*acos(x/180-1))}, {20-y} );
+  \end{axis}
+\end{tikzpicture}
+\end{document}
